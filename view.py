@@ -18,5 +18,9 @@ def closeAllDrivers():
         d.close()
 
 view()
-time.sleep(60)
+time.sleep(600)
 closeAllDrivers()
+for i in range(1, 300):
+    view()
+    time.sleep(700)
+    closeAllDrivers()
