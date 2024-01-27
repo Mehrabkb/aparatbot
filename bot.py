@@ -15,13 +15,30 @@ def scrollPage(counter = 3):
         time.sleep(6)
 
 # this function get links and write to txt file 
-def writeLinksInTxtFile(links):
-    f = open("links.txt" , "w")
-    for link in links : 
-        f.write(link.get_attribute("href") + '\n')
-    f.close()    
-
+# if switch is 1 means first elements get from html page and 2 clean links write
+def writeLinksInTxtFile(links , switch = 1):
+    if(switch == 1):
+        f = open("links.txt" , "w")
+        for link in links : 
+            f.write(link.get_attribute("href") + '\n')
+        f.close()    
+    elif(switch == 2):
+        f = open("links.txt" , "w")
+        for link in links :
+            f.write(link)
+        f.close()
+def cleanTxtFile():
+    f = open('links.txt' , 'r')
+    lines = f.readlines()
+    finalLines = []
+    for line in lines : 
+        if(line.find('playlist') == -1):
+            finalLines.append(line)
+    f.close()
+    writeLinksInTxtFile(set(finalLines) , 2)
 scrollPage(5)
 links = getElementsByCssSelector('a[class~="titled-link"]')
-writeLinksInTxtFile(links)
+writeLinksInTxtFile(links , 1)
+cleanTxtFile()
+
 
